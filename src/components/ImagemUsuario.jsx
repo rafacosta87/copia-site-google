@@ -1,11 +1,14 @@
 /* eslint-disable no-unused-vars */
 //colocamos o componente itemHistorico diretamente no código e o botão excluir não sumia no desfoco
 import { useRef, useState } from "react"
+import { useContext } from 'react'
+import { ContextoTema } from './ContextoTema'
 
 function ImagemUsuario() {
     const [nomeUsuario, setNomeUsuario] = useState("Maria")
     const [image, setImage] = useState(sessionStorage.getItem("image"))
     const inputRef = useRef()
+    const {temaEscuro} = useContext(ContextoTema)
 
     function handleImageUpload(event) {                                                                               //função recebera um event                         
         const file = event.target.files[0]                                                                            //pegando o primeiro elemento do array e passando para file
@@ -24,7 +27,7 @@ function ImagemUsuario() {
 
 
     return (
-        <div className='hover:bg-gray-700 rounded-full p-1'>
+        <div className={`${temaEscuro? "hover:bg-[#303134]" : "hover:bg-[rgba(60,64,67,.08)]"}  rounded-full p-[5px]`}>
             <input
                 type="file"                                                                                          //input do tipo file , é para buscarmos arquivos dentro do nonsso computador. Quando tiver a ação do clique abrira uma aba para escolhermos um arquivo , dentre os que estão salvos no pc
                 hidden                                             

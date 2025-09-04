@@ -5,16 +5,20 @@
 import Cabecalho from './components/Cabecalho'
 import Conteudo from './components/Conteudo'
 import Rodape from './components/Rodape'
+import ProvedorTema from './components/ProvedorTema'
 
 function App() {
+ 
 
   return (
     <>
-      <div className='flex flex-col justify-between items-center h-screen w-screen bg-[#202124] '>
-        <Cabecalho />
-        <Conteudo />
-        <Rodape />
-      </div>
+        <div className='flex flex-col justify-between items-center h-screen w-screen '>
+      <ProvedorTema>
+          <Cabecalho />
+          <Conteudo />
+          <Rodape />
+      </ProvedorTema>
+        </div>
     </>
   )
 }
