@@ -1,9 +1,8 @@
-
-
 import IconeCabecalho from '../icones/IconeCabecalho'
 import ImagemUsuario from './ImagemUsuario'
 import { useContext } from 'react'
 import { ContextoTema } from './ContextoTema'
+import { Tooltip } from 'react-tooltip'
 
 function Cabecalho() {
   const { temaEscuro } = useContext(ContextoTema)
@@ -20,10 +19,13 @@ function Cabecalho() {
           >Imagens</a>
           <div className={`w-10 h-10 ${temaEscuro? "hover:bg-[#303134]" : "hover:bg-[rgba(60,64,67,.08)]"} cursor-pointer rounded-full p-2 flex flex-row justify-center items-center`}
             style={{ color: temaEscuro ? "rgb(229, 233, 236)" : "rgba(0,0,0,.87)" }}>
+        
             <IconeCabecalho />
-          </div>
 
+          </div>
+       
           <ImagemUsuario />
+         
 
 
 

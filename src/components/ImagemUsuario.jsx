@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-//colocamos o componente itemHistorico diretamente no código e o botão excluir não sumia no desfoco
 import { useRef, useState } from "react"
 import { useContext } from 'react'
 import { ContextoTema } from './ContextoTema'
+import { Tooltip } from "react-tooltip"
 
 function ImagemUsuario() {
     const [nomeUsuario, setNomeUsuario] = useState("Maria")
@@ -27,6 +27,7 @@ function ImagemUsuario() {
 
 
     return (
+        
         <div className={`${temaEscuro? "hover:bg-[#303134]" : "hover:bg-[rgba(60,64,67,.08)]"}  rounded-full p-[5px]`}>
             <input
                 type="file"                                                                                          //input do tipo file , é para buscarmos arquivos dentro do nonsso computador. Quando tiver a ação do clique abrira uma aba para escolhermos um arquivo , dentre os que estão salvos no pc
@@ -45,6 +46,7 @@ function ImagemUsuario() {
                 }
             </div>
         </div>
+        
     )
 }
 export default ImagemUsuario

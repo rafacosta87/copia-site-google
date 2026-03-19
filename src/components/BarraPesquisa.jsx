@@ -1,3 +1,4 @@
+//mostra a questão da borda quando se unem input e menu
 import IconeLupa from '../icones/IconeLupa'
 import IconeTeclado from '../icones/IconeTeclado'
 import IconeMicrofone from '../icones/IconeMicrofone'
@@ -34,8 +35,7 @@ function BarraPesquisa() {
     }, [])
 
     function handleSearch(event) {
-        //handleSearch recebera um evento se esse evento for a tecla Enter executara a função                                                                                                                           
-        if (event.code == "Enter" || event.button == 0) {
+        if (event.code == "Enter" || event.button == 0) {                                                                                    //handleSearch recebera um evento se esse evento for a tecla Enter executara a função
             event.preventDefault()                                                                                                          //prrevenir um evento padrão , no caso aqui estamos pegando event.code == Enter, o Enter dentro da tag textarea, quando clicado ele pulara uma linha e não queremos este comportamento , para isso usamos o "preventDefault"                                                                              
             if (pesquisa.trim() == "") {                                                                                                    //pesquisa não aceitara valor vazio e nem espaços vazios
                 return
@@ -73,11 +73,10 @@ function BarraPesquisa() {
                 style={{
                     borderRadius: focused ? "26px 26px 0px 0px" : "26px",
                     backgroundColor: focused ? (temaEscuro ? "#303134" : "#fff") : (temaEscuro ? (hovered ? "#5f6368" : "#4d5156") : "#fff"),
-                    boxShadow: focused ? (temaEscuro ? "" : "0 2px 8px 1px rgba(64,60,67,.24)") : (temaEscuro ? "" : (hovered? "0 2px 8px 1px rgba(64,60,67,.24)" : "0px 3px 10px 0px rgba(31, 31, 31, 0.08)") ),
-                    border: focused ? (temaEscuro? "" : "") : (temaEscuro? "" : "1px  solid #dadce0")
-
+                    boxShadow: focused ? (temaEscuro ? "" : "0 2px 8px 1px rgba(64,60,67,.24)") : (temaEscuro ? "" : (hovered ? "0 2px 8px 1px rgba(64,60,67,.24)" : "0px 3px 10px 0px rgba(31, 31, 31, 0.08)")),
+                    border: focused ? (temaEscuro ? "" : "") : (temaEscuro ? "" : "1px  solid #dadce0")
                 }}
-                className={` relative flex flex-row justify-between items-center w-full max-w-[580px] h-[50px] rounded-[26px] px-5 py-7 `}>
+                className={` relative flex flex-row justify-between items-center w-full max-w-[680px] h-[50px] rounded-[26px] px-5 py-[26px] `}>
                 <div className='cursor-pointer' onClick={e => handleSearch(e)}>
                     <IconeLupa />
                 </div>
@@ -96,26 +95,25 @@ function BarraPesquisa() {
 
                 <div className='flex flex-row gap-4 justify-center items-center'
                     style={{ color: temaEscuro ? "#aaadb2" : "#1f1f1f" }}>
-                    {pesquisa != "" ?                                                                                                                                 //se for diferente de string vazia , mostrara o "x" para limpar o campo
+                    {pesquisa != "" &&                                                                                                                                 //se for diferente de string vazia , mostrara o "x" para limpar o campo
                         <div className='cursor-pointer border-r-[1px] pr-[12px] py-1.5 '
                             style={{ borderColor: temaEscuro ? "#5f6368" : "#aaadb2" }}
                             onClick={limparPesquisa}
                         >
                             <IconeX />
                         </div>
-                        : null}
+                    }
                     <IconeTeclado />
                     <IconeMicrofone />
                     <IconeFoto />
                 </div>
 
                 {focused ?
-                    <div className='absolute  w-full max-w-[580px] top-[50px] left-0 flex flex-col  rounded-b-[26px] py-2  overflow-hidden '
+                    <div className='absolute  w-full max-w-[680px] top-[50px] left-0 flex flex-col  rounded-b-[26px] py-2  overflow-hidden z-30'
                         style={{
                             backgroundColor: temaEscuro ? "#303134" : "#fff",
-                            boxShadow: (temaEscuro ? "" : "0 4px 8px -2px rgba(64,60,67,.24)") ,
-                            border: focused ? (temaEscuro? "" : "") : (temaEscuro? "" : "1px  solid #dadce0"),
-                            borderTopStyle: "none"
+                            boxShadow: (temaEscuro ? "" : "0 4px 8px -2px rgba(64,60,67,.24)"),
+                            width: "calc(100% )"
                         }}
                     >                                                                                                                                              {/*a div filha absolute em relação div pai. Observamos que na linha 57 tem o estilo relative na div pai , e nesta div o absolute, fazemos isso para posicionar o menu suspenso, ele também não empurrara mada. Abaixo estmos mapeando os itens que ficaram no menu */}
                         <div className='px-4'>

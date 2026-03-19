@@ -105,21 +105,20 @@ function Rodape() {
                                                 >
                                                     <div
                                                         style={{ color: "#fff" }}
-                                                    >Tema escuro: ativado
-
+                                                    >
+                                                        Tema escuro: ativado
                                                     </div>
                                                     <div ><IconeLua /> </div> </div>
                                                 :
-                                                <div className="flex flex-row justify-between text-transparent  hover:text-[#5e5e5e]"
-
-                                                >
+                                                <div className="flex flex-row justify-between text-transparent  hover:text-[#5e5e5e]">
                                                     <div
                                                         style={{ color: "#1f1f1f" }}
-                                                    >Tema escuro: desativado </div>  <div ><IconeSol /> </div> </div>
+                                                    >
+                                                        Tema escuro: desativado
+                                                    </div>  <div ><IconeSol /> </div> </div>
                                         }
                                     </a>
                                 </div>
-
                             }
                         </div>
 

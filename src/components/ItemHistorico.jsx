@@ -14,7 +14,7 @@ function ItemHistorico({ item, event }) {                                       
             className={`flex w-full flex-row gap-5 items-center  px-5 py-1 ${temaEscuro? "hover:bg-[#3c4043]" : "hover:bg-[#f7f8f9]"}`}
             style={{color: temaEscuro? "#c58af9" : "#52188c" }}
         >
-            <div className="text-[#8d9196] "> 
+            <div className={`${temaEscuro? "text-[#8d9196]" : "text-[#b3b9c0]"} `}> 
             <IconeRelogio />
             </div>
             <div className='flex flex-row justify-between w-full'>
