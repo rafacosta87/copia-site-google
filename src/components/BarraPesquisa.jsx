@@ -27,23 +27,20 @@ function BarraPesquisa() {
 
     useClickOutside(searchbarRef, () => setFocused(false))
 
-    function handleSearch(event) {
-        if (event.code == "Enter" || event.button == 0) {
-            event.preventDefault()
-            if (pesquisa.trim() == "") {
-                return
-            }
-            const novoHistoricoPesquisa = [...historicoPesquisa]
-            if (historicoPesquisa.filter(historico => historico == pesquisa).length > 0) {
-                const index = novoHistoricoPesquisa.findIndex(historico => historico == pesquisa)
-                novoHistoricoPesquisa.splice(index, 1)
-            }
-            novoHistoricoPesquisa.unshift(pesquisa)
-            setHistoricoPesquisa(novoHistoricoPesquisa)
-            setPesquisa("")
-            window.location.href = `https://www.google.com/search?q=${pesquisa}`
-
+    function handleSubmit(event) {
+        event.preventDefault()
+        if (pesquisa.trim() == "") {
+            return
         }
+        const novoHistoricoPesquisa = [...historicoPesquisa]
+        if (historicoPesquisa.filter(historico => historico == pesquisa).length > 0) {
+            const index = novoHistoricoPesquisa.findIndex(historico => historico == pesquisa)
+            novoHistoricoPesquisa.splice(index, 1)
+        }
+        novoHistoricoPesquisa.unshift(pesquisa)
+        setHistoricoPesquisa(novoHistoricoPesquisa)
+        setPesquisa("")
+        window.location.href = `https://www.google.com/search?q=${pesquisa}`
     }
 
     function limparPesquisa() {
@@ -58,7 +55,7 @@ function BarraPesquisa() {
 
     return (
 
-        <>
+        <form onSubmit={handleSubmit} className='w-full flex flex-col justify-center items-center mt-[25px]'>
             <div
                 onMouseOver={() => setHovered(true)}
                 onMouseOut={() => setHovered(false)}
@@ -69,21 +66,19 @@ function BarraPesquisa() {
                     boxShadow: focused ? (temaEscuro ? "" : "0 2px 8px 1px rgba(64,60,67,.24)") : (temaEscuro ? "" : (hovered ? "0 2px 8px 1px rgba(64,60,67,.24)" : "0px 3px 10px 0px rgba(31, 31, 31, 0.08)")),
                     border: focused ? (temaEscuro ? "" : "") : (temaEscuro ? "" : "1px  solid #dadce0")
                 }}
-                className={` relative flex flex-row justify-between items-center w-full max-w-[680px] h-[50px] rounded-[26px] px-5 py-[26px] `}>
-                <div className='cursor-pointer' onClick={e => handleSearch(e)}>
+                className={` relative flex flex-row justify-between items-center w-full max-w-[688px] h-[50px] rounded-[26px] px-5  `}>
+                <button type="submit" className='cursor-pointer'>
                     <IconeLupa />
-                </div>
+                </button>
                 <div className=' w-full '>
-                    <textarea
+                    <input
+                        type="text"
                         onFocus={() => setFocused(true)}
-                        rows="1"
-                        className=' w-full max-w-[400px] focus:outline-none p-2 text-[16px] resize-none'
+                        className=' w-full max-w-[500px] focus:outline-none  px-3 text-[16px] bg-transparent'
                         style={{ color: temaEscuro ? "#e8eaed" : "#000000de" }}
-                        onKeyDown={e => handleSearch(e)}
                         value={pesquisa}
                         onChange={(e) => setPesquisa(e.target.value)}
-                    >
-                    </textarea>
+                    />
                 </div>
 
                 <div className='flex flex-row gap-4 justify-center items-center'
@@ -102,7 +97,7 @@ function BarraPesquisa() {
                 </div>
 
                 {focused ?
-                    <div className='absolute  w-full max-w-[680px] top-[50px] left-0 flex flex-col  rounded-b-[26px] py-2  overflow-hidden z-30'
+                    <div className='absolute  w-full max-w-[688px] top-[50px] left-0 flex flex-col  rounded-b-[26px] py-2  overflow-hidden z-30'
                         style={{
                             backgroundColor: temaEscuro ? "#303134" : "#fff",
                             boxShadow: (temaEscuro ? "" : "0 4px 8px -2px rgba(64,60,67,.24)"),
@@ -118,8 +113,8 @@ function BarraPesquisa() {
                             <ItemHistorico item={historico} key={id} event={() => excluirPesquisa(id)} />
                         )}
                         <div className='flex flex-row justify-center items-center gap-3 py-4 mt-1'>
-                            <Botao children={"Pesquisa Google"} onClick={e => handleSearch(e)} />
-                            <Botao children={"Estou com sorte"} onClick={e => handleSearch(e)} />
+                            <Botao children={"Pesquisa Google"} type="submit" />
+                            <Botao children={"Estou com sorte"} type="submit" />
                         </div>
                     </div>
                     :
@@ -127,11 +122,11 @@ function BarraPesquisa() {
                 }
 
             </div>
-            <div className='flex flex-row justify-center items-center gap-3 mt-1.5'>
-                <Botao children={"Pesquisa Google"} onClick={e => handleSearch(e)} />
-                <Botao children={"Estou com sorte"} onClick={e => handleSearch(e)} />
+            <div className='flex flex-row justify-center items-center gap-3 mt-[30px]'>
+                <Botao children={"Pesquisa Google"} type="submit" />
+                <Botao children={"Estou com sorte"} type="submit" />
             </div>
-        </>
+        </form>
     )
 }
 
