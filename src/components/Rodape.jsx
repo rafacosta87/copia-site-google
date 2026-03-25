@@ -1,29 +1,20 @@
-/* eslint-disable no-unused-vars */
-import { useState, useRef, useEffect, useContext } from "react"
+import { useState, useRef, useContext } from "react"
+import useClickOutside from '../hooks/useClickOutside'
 import IconeLua from "../icones/IconeLua"
 import IconeSol from "../icones/IconeSol"
 import { ContextoTema } from "./ContextoTema"
 
 function Rodape() {
-    const [focused, setFocused] = useState(false)                                                                                          //estado para verificar se textarea esta focado
+    const [focused, setFocused] = useState(false)
     const searchbarRef = useRef()
     const { temaEscuro, trocarTema } = useContext(ContextoTema)
 
-    function AbrirMenu(e) {                                                                                                                //função para abrir e fechar o menu
-        e.preventDefault()                                                                                                                 //aqui estamos evitando o evento padrão da tag a(link) de atualizar a pagina ao clique
+    function AbrirMenu(e) {
+        e.preventDefault()
         setFocused(!focused)
     }
 
-    useEffect(() => {                                                                                                                       //função para fechar o menu de configurações quando clicamos fora dele , essa função é igual a que fizemos no componente BarraDePesquisa                                        
-        function handleClickOutside(e) {
-            if (searchbarRef.current && !searchbarRef.current.contains(e.target)) {
-                setFocused(false)
-                console.log(searchbarRef.current)
-            }
-        }
-        document.addEventListener("mousedown", handleClickOutside)
-        return () => { document.removeEventListener("mousedown", handleClickOutside) }
-    }, [])
+    useClickOutside(searchbarRef, () => setFocused(false))
 
     return (
         <>
@@ -57,16 +48,16 @@ function Rodape() {
                         <a className="hover:underline" href="https://policies.google.com/terms?hl=pt-BR&fg=1">Termos</a>
                         <div className="relative ">
 
-                            <a className="hover:underline" onClick={e => AbrirMenu(e)} href="">Configurações</a>                                      {/*a barra de menu abaixo(l47 a l58) esta relative a este botão Configurações , observamos que tem uma tag div(l 42) envolvendo os 2. Observamos que passamos relative para div que envolve os 2 e absolute para o menu(l 47*/}
+                            <a className="hover:underline" onClick={e => AbrirMenu(e)} href="">Configurações</a>
 
-                            {focused &&                                                                                                                /*quando botão(Configurações) estiver focado abrira o menu , caso contrario ele ficara fechado */
+                            {focused &&
                                 <div
                                     className="absolute flex flex-col text-[14px] rounded-[8px] py-[5px] bottom-8 whitespace-nowrap -right-4"
                                     style={{
                                         backgroundColor: temaEscuro ? "#1f1f1f" : "#fff",
                                         color: temaEscuro ? "#fff" : "#1f1f1f",
                                     }}
-                                >                                                                                                                        {/*aqui estamos melhorando o posicionando do menu sobre o botão configurações nos estilos "bottom-8 e -right-4" */}
+                                >
                                     <a
                                         className={`pt-[4px] pb-[4px] px-[16px] ${temaEscuro ? "hover:bg-[#3c4043] " : "hover:bg-[#e5e5e5]"}`}
                                         href="https://www.google.com/preferences?hl=pt-BR&authuser=0&fg=1">Configurações de Pesquisa</a>
@@ -86,13 +77,13 @@ function Rodape() {
                                         className={`pt-[4px] pb-[4px] px-[16px] ${temaEscuro ? "hover:bg-[#3c4043] " : "hover:bg-[#e5e5e5]"}`}
                                         href="https://www.google.com/imghp?hl=pt-BR&authuser=0&ogbl">Enviar feedback</a>
                                     <hr
-                                        className=' w-full h-[1px] m-auto border-none bg-[#444746] mt-[5px] mb-[5px]'
+                                        className=' w-full h-[1px] m-auto border-none mt-[5px] mb-[5px]'
                                         style={{ backgroundColor: temaEscuro ? "#444746" : "#dadce0" }}
                                     />
 
                                     <a
                                         onClick={(e) => {
-                                            e.preventDefault()                                                                                         //aqui estamos evitando o evento padrão da tag a(link) de atualizar a pagina ao clique
+                                            e.preventDefault()
                                             trocarTema()
                                         }}
                                         className={`pb-[6px] pt-[11px] px-[16px] ${temaEscuro ? "hover:bg-[#3c4043] " : "hover:bg-[#e5e5e5]"}`}
@@ -108,14 +99,21 @@ function Rodape() {
                                                     >
                                                         Tema escuro: ativado
                                                     </div>
-                                                    <div ><IconeLua /> </div> </div>
+                                                    <div >
+                                                        <IconeLua />
+                                                    </div>
+                                                </div>
                                                 :
                                                 <div className="flex flex-row justify-between text-transparent  hover:text-[#5e5e5e]">
                                                     <div
                                                         style={{ color: "#1f1f1f" }}
                                                     >
                                                         Tema escuro: desativado
-                                                    </div>  <div ><IconeSol /> </div> </div>
+                                                    </div>
+                                                    <div >
+                                                        <IconeSol />
+                                                    </div>
+                                                </div>
                                         }
                                     </a>
                                 </div>

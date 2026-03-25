@@ -9,8 +9,8 @@ function App() {
  
   return (
     <>
-        <div className='flex flex-col justify-between items-center h-screen w-screen '>
-      <ProvedorTema>                                                                         {/*ProvedorTema(l4) recebendo as tags como children e passando para elas "temaEscuro(estado) e trocarTema(função*/}
+        <div className='flex flex-col items-center h-screen w-screen '>
+      <ProvedorTema>                                                                         
           <Cabecalho />
           <Conteudo />
           <Rodape />
