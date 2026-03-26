@@ -14,7 +14,7 @@ function App() {
           <Cabecalho />
           <Conteudo />
           <Rodape />
-          <Tooltip id='tooltip' place='bottom' style={{backgroundColor: "#2d2d2d", fontSize: "12px" , padding: "5px"}}/>
+          <Tooltip id='tooltip' place='bottom' style={{backgroundColor: "#2d2d2d", fontSize: "12px" , padding: "5px", zIndex: "32"}}/>
       </ProvedorTema>
         </div>
     </>

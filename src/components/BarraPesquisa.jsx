@@ -12,122 +12,122 @@ import { useContext } from 'react'
 import { ContextoTema } from './ContextoTema'
 
 function BarraPesquisa() {
-    const { temaEscuro } = useContext(ContextoTema)
-    const [historicoPesquisa, setHistoricoPesquisa] = useState(JSON.parse(localStorage.getItem("historicoPesquisa") ?? "[]"))
-    const [pesquisa, setPesquisa] = useState("")
-    const [focused, setFocused] = useState(false)
-    const searchbarRef = useRef()
-    const [hovered, setHovered] = useState(false)
+    const { temaEscuro } = useContext(ContextoTema);
+    const [historicoPesquisa, setHistoricoPesquisa] = useState(() =>
+        JSON.parse(localStorage.getItem("historicoPesquisa") ?? "[]")
+    );
+    const [pesquisa, setPesquisa] = useState("");
+    const [focused, setFocused] = useState(false);
+    const searchbarRef = useRef();
 
     useEffect(() => {
-        if (historicoPesquisa) {
-            localStorage.setItem("historicoPesquisa", JSON.stringify(historicoPesquisa))
-        }
-    }, [historicoPesquisa])
+        localStorage.setItem("historicoPesquisa", JSON.stringify(historicoPesquisa));
+    }, [historicoPesquisa]);
 
-    useClickOutside(searchbarRef, () => setFocused(false))
+    useClickOutside(searchbarRef, () => setFocused(false));
 
     function handleSubmit(event) {
-        event.preventDefault()
-        if (pesquisa.trim() == "") {
-            return
-        }
-        const novoHistoricoPesquisa = [...historicoPesquisa]
-        if (historicoPesquisa.filter(historico => historico == pesquisa).length > 0) {
-            const index = novoHistoricoPesquisa.findIndex(historico => historico == pesquisa)
-            novoHistoricoPesquisa.splice(index, 1)
-        }
-        novoHistoricoPesquisa.unshift(pesquisa)
-        setHistoricoPesquisa(novoHistoricoPesquisa)
-        setPesquisa("")
-        window.location.href = `https://www.google.com/search?q=${pesquisa}`
-    }
-
-    function limparPesquisa() {
-        setPesquisa("")
-    }
-
-    function excluirPesquisa(id) {
-        const array = [...historicoPesquisa]
-        array.splice(id, 1)
-        setHistoricoPesquisa(array)
+        event.preventDefault();
+        const termo = pesquisa.trim();
+        if (!termo) return;
+        // Remove duplicatas e coloca no topo
+        setHistoricoPesquisa(prev => [termo, ...prev.filter(h => h !== termo)].slice(0, 30));
+        setPesquisa("");
+        window.location.href = `https://www.google.com/search?q=${encodeURIComponent(termo)}`;
     }
 
     return (
-
-        <form onSubmit={handleSubmit} className='w-full flex flex-col justify-center items-center mt-[25px]'>
+        <form onSubmit={handleSubmit} className='w-full flex flex-col items-center mt-[25px]'>
             <div
-                onMouseOver={() => setHovered(true)}
-                onMouseOut={() => setHovered(false)}
                 ref={searchbarRef}
-                style={{
-                    borderRadius: focused ? "26px 26px 0px 0px" : "26px",
-                    backgroundColor: focused ? (temaEscuro ? "#303134" : "#fff") : (temaEscuro ? (hovered ? "#5f6368" : "#4d5156") : "#fff"),
-                    boxShadow: focused ? (temaEscuro ? "" : "0 2px 8px 1px rgba(64,60,67,.24)") : (temaEscuro ? "" : (hovered ? "0 2px 8px 1px rgba(64,60,67,.24)" : "0px 3px 10px 0px rgba(31, 31, 31, 0.08)")),
-                    border: focused ? (temaEscuro ? "" : "") : (temaEscuro ? "" : "1px  solid #dadce0")
-                }}
-                className={` relative flex flex-row justify-between items-center w-full max-w-[688px] h-[50px] rounded-[26px] px-5  `}>
-                <button type="submit" className='cursor-pointer'>
+                className={`
+        relative flex items-center w-full max-w-[688px] h-[50px] px-5 
+        
+        /* --- TEMA CLARO --- */
+        ${!temaEscuro ? `
+            bg-white border 
+            ${focused
+                            ? 'rounded-t-[24px] border-transparent shadow-[0_1px_6px_rgba(32,33,36,0.28)]'
+                            : 'rounded-[24px] border-[#dadce0] shadow-[0px_3px_10px_0px_rgba(31,31,31,0.08)] hover:shadow-[0_1px_6px_rgba(32,33,36,0.28)] hover:border-transparent'
+                        }
+        ` : ''}
+
+        /* --- TEMA ESCURO --- */
+        ${temaEscuro ? `
+            border-none
+            ${focused
+                            ? 'bg-[#303134] rounded-t-[24px] shadow-none'
+                            : 'bg-[#4d5156] rounded-[24px] hover:bg-[#5f6368] hover:shadow-[0_1px_6px_rgba(0,0,0,0.5)]'
+                        }
+        ` : ''}
+    `}
+            >
+                <button type="submit" className="cursor-pointer ">
                     <IconeLupa />
                 </button>
-                <div className=' w-full '>
-                    <input
-                        type="text"
-                        onFocus={() => setFocused(true)}
-                        className=' w-full max-w-[500px] focus:outline-none  px-3 text-[16px] bg-transparent'
-                        style={{ color: temaEscuro ? "#e8eaed" : "#000000de" }}
-                        value={pesquisa}
-                        onChange={(e) => setPesquisa(e.target.value)}
-                    />
-                </div>
 
-                <div className='flex flex-row gap-4 justify-center items-center'
-                    style={{ color: temaEscuro ? "#aaadb2" : "#1f1f1f" }}>
-                    {pesquisa != "" &&
-                        <div className='cursor-pointer border-r-[1px] pr-[12px] py-1.5 '
-                            style={{ borderColor: temaEscuro ? "#5f6368" : "#aaadb2" }}
-                            onClick={limparPesquisa}
+                <input
+                    type="text"
+                    onFocus={() => setFocused(true)}
+                    value={pesquisa}
+                    onChange={(e) => setPesquisa(e.target.value)}
+                    aria-label="Pesquisar"
+                    className={`
+                        w-full h-full px-3 text-[16px] focus:outline-none bg-transparent
+                        ${temaEscuro ? 'text-[#e8eaed]' : 'text-[#000000de]'}
+                    `}
+                />
+
+                <div className={`flex items-center gap-4 ${temaEscuro ? 'text-[#aaadb2]' : 'text-[#1f1f1f]'}`}>
+                    {pesquisa && (
+                        <button
+                            type="button"
+                            onClick={() => setPesquisa("")}
+                            aria-label="Limpar pesquisa"
+                            className={`border-r-[1.5px] cursor-pointer pr-3 py-1 ${temaEscuro ? 'border-[#5f6368]' : 'border-[#aaadb2]'}`}
                         >
                             <IconeX />
-                        </div>
-                    }
+                        </button>
+                    )}
                     <IconeTeclado />
                     <IconeMicrofone />
                     <IconeFoto />
                 </div>
 
-                {focused ?
-                    <div className='absolute  w-full max-w-[688px] top-[50px] left-0 flex flex-col  rounded-b-[26px] py-2  overflow-hidden z-30'
-                        style={{
-                            backgroundColor: temaEscuro ? "#303134" : "#fff",
-                            boxShadow: (temaEscuro ? "" : "0 4px 8px -2px rgba(64,60,67,.24)"),
-                            width: "calc(100% )"
-                        }}
-                    >
-                        <div className='px-4'>
-                            <hr className=' w-full h-[1px] m-auto border-none max-w-[540px]  mt-[-4px] '
-                                style={{ backgroundColor: temaEscuro ? "#5f6368" : "#e8eaed" }}
-                            />
+                {/* Dropdown de Histórico */}
+                {focused && (
+                    <div className={`
+        absolute top-[49px]   w-full max-w-[688px] flex flex-col rounded-b-[24px] pb-4 z-30
+        ${temaEscuro
+                            ? 'bg-[#303134] shadow-none left-[0]'
+                            : 'bg-white shadow-[0_4px_6px_rgba(32,33,36,.28)] left-[-1px]'
+                        }
+    `}>
+                        <div className="px-4 mb-2">
+                            {/* Linha separadora idêntica à do Google */}
+                            <hr className={`border-t ${temaEscuro ? 'border-[#5f6368]' : 'border-[#e8eaed]'} `} />
                         </div>
-                        {historicoPesquisa.slice(0, 10).map((historico, id) =>
-                            <ItemHistorico item={historico} key={id} event={() => excluirPesquisa(id)} />
-                        )}
-                        <div className='flex flex-row justify-center items-center gap-3 py-4 mt-1'>
-                            <Botao children={"Pesquisa Google"} type="submit" />
-                            <Botao children={"Estou com sorte"} type="submit" />
+                        {historicoPesquisa.slice(0, 10).map((historico, id) => (
+                            <ItemHistorico
+                                key={id}
+                                item={historico}
+                                event={() => setHistoricoPesquisa(prev => prev.filter((_, i) => i !== id))}
+                            />
+                        ))}
+                        <div className='flex justify-center gap-3 py-4 mt-1'>
+                            <Botao type="submit">Pesquisa Google</Botao>
+                            <Botao type="button">Estou com sorte</Botao>
                         </div>
                     </div>
-                    :
-                    null
-                }
-
+                )}
             </div>
-            <div className='flex flex-row justify-center items-center gap-3 mt-[30px]'>
-                <Botao children={"Pesquisa Google"} type="submit" />
-                <Botao children={"Estou com sorte"} type="submit" />
+
+            <div className='flex gap-3 mt-[30px]'>
+                <Botao type="submit">Pesquisa Google</Botao>
+                <Botao type="button">Estou com sorte</Botao>
             </div>
         </form>
-    )
+    );
 }
 
 export default BarraPesquisa
