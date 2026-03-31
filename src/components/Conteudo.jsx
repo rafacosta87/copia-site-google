@@ -12,7 +12,7 @@ const {temaEscuro} = useContext(ContextoTema)
 
   return (
     <>
-      <div className='flex flex-col items-center h-full w-full px-5.5 pt-49'
+      <div className='flex flex-col items-center justify-center h-full w-full px-5.5 pb-[185px]'
       style={{ backgroundColor: temaEscuro ? "#202124" : "#fff" }}
       >
 
