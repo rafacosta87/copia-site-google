@@ -1,12 +1,25 @@
 import { useContext } from 'react'
 import { ContextoTema } from './ContextoTema'
 
-
-function Botao({ children, onClick }) {
+function Botao({ children, onClick, type = "button" }) {
     const { temaEscuro } = useContext(ContextoTema)
-    return <button onClick={onClick} className={` px-[10px] py-[5px] h-[34px] w-[140px]  text-center cursor-pointer rounded-[8px] text-[14px] border-[1px] font-[Arial,sans-serif] ${temaEscuro? "border-[#3c4043]" : "border-[#f8f9fa]"} ${temaEscuro ? "hover:border-[#5f6368]" : "hover:border-[#dadce0]"} ${temaEscuro? "" : "hover:shadow-[0_1px_1px_rgba(0,0,0,.1)]"}`}
-        style={{ backgroundColor: temaEscuro ? "#3c4043" : "#f8f9fa", color: temaEscuro ? "#e8eaed" : "#3c4043" }}>
-        {children}
-    </button>
+
+    return (
+        <button 
+            type={type}
+            onClick={onClick} 
+            className={`
+                px-2.5 py-[5px] h-[36px] min-w-[140px] rounded-md text-[14px] border transition-all font-sans cursor-pointer
+                /* Lógica de Cores e Bordas */
+                ${temaEscuro 
+                    ? "bg-[#3c4043] border-[#3c4043] text-[#e8eaed] hover:border-[#5f6368] hover:text-[#f8f9fa]" 
+                    : "bg-[#f8f9fa] border-[#f8f9fa] text-[#3c4043] hover:border-[#dadce0] hover:shadow-[0_1px_1px_rgba(0,0,0,0.1)]"
+                }
+            `}
+        >
+            {children}
+        </button>
+    )
 }
+
 export default Botao
