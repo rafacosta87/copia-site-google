@@ -36,7 +36,7 @@ function ImagemUsuario() {
                 onChange={handleImageUpload}
                 accept="image/*"
             />
-            <div className='bg-purple-800 h-8 w-8 rounded-full cursor-pointer overflow-hidden flex justify-center items-center text-xl text-white font-[Arial]'
+            <div className='bg-[#4527a0] h-8 w-8 rounded-full cursor-pointer overflow-hidden flex justify-center items-center text-xl text-white font-[Arial]'
                 onClick={() => inputRef.current.click()}
             >
                 {image ?
