@@ -40,6 +40,7 @@ function BarraPesquisa() {
         <form onSubmit={handleSubmit} className='w-full flex flex-col items-center mt-[25px]'>
             <div
                 ref={searchbarRef}
+                //vamos juntar tema escuro e tema claro depois de conferir código
                 className={`
         relative flex items-center w-full max-w-[688px] h-[50px] px-5 
         

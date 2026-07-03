@@ -11,16 +11,15 @@ function ItemHistorico({ item, event }) {
             ${temaEscuro ? "hover:bg-[#3c4043]" : "hover:bg-[#f7f8f9]"}
         `}>
             {/* Ícone de Relógio */}
-            <div className={temaEscuro ? "text-[#9aa0a6]" : "text-[#70757a]"}> 
+            <div className={temaEscuro ? "text-[#9aa0a6]" : "text-[#70757a]"}>
                 <IconeRelogio />
             </div>
 
             <div className="flex flex-row justify-between w-full items-center">
                 {/* Texto da Pesquisa */}
-                <a 
-                    className={`w-full cursor-default text-[16px] ${
-                        temaEscuro ? "text-[#c58af9]" : "text-[#52188c]"
-                    }`} 
+                <a
+                    className={`w-full cursor-default text-[16px] ${temaEscuro ? "text-[#c58af9]" : "text-[#52188c]"
+                        }`}
                     href={`https://www.google.com/search?q=${encodeURIComponent(item)}`}
                 >
                     {item}
@@ -34,8 +33,8 @@ function ItemHistorico({ item, event }) {
                     }}
                     className={`
                         hidden group-hover:flex text-[12px] hover:underline transition-colors
-                        ${temaEscuro 
-                            ? "text-[#aaadb2] hover:text-[#8ab4f8]" 
+                        ${temaEscuro
+                            ? "text-[#aaadb2] hover:text-[#8ab4f8]"
                             : "text-[#70757a] hover:text-[#1558d6]"
                         }
                     `}
