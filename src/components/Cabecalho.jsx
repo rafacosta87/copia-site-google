@@ -22,15 +22,17 @@ const AppMenuItem = ({ app, temaEscuro }) => (
     href={app.url}
     className={`
       flex flex-col items-center justify-center p-2 rounded-lg transition-colors
-      ${temaEscuro ? "hover:bg-[#3c4043]" : "hover:bg-gray-200"}
+      ${temaEscuro ? "hover:bg-[#3c4043] text-white" : "hover:bg-gray-200 text-gray-700"}
     `}
   >
-    {/* Substitua por um componente de ícone real se tiver um: {app.icon ? <app.icon /> : <div className="w-10 h-10 bg-gray-400 rounded-full"></div>} */}
-    {/* Placeholder para o ícone. Você pode substituí-lo por seus próprios componentes de ícone SVG, por exemplo. */}
-    <div className={`w-10 h-10 flex items-center justify-center text-xl rounded-full ${temaEscuro ? "bg-[#3c4043] text-white" : "bg-gray-200 text-gray-700"}`}>
-      {app.name.charAt(0)} {/* Exibe a primeira letra do nome como um placeholder de ícone */}
+    {app.icon ? (
+      <app.icon className="w-11 h-11" /> // Renderiza o componente de ícone se existir
+    ) : (
+    <div className={`w-10 h-10 flex items-center justify-center text-xl rounded-full ${temaEscuro ? "bg-[#3c4043]" : "bg-gray-200 "}`}>
+        {app.name.charAt(0)}
     </div>
-    <span className="mt-2 text-xs text-center whitespace-nowrap">{app.name}</span>
+          )}
+    <span className="mt-2 text-[14px] text-center whitespace-nowrap">{app.name}</span>
   </a>
 );
 
@@ -67,7 +69,6 @@ function Cabecalho() {
               ${temaEscuro
                 ? `text-[#e5e9ec] ${appsMenuAberto ? "bg-[#303134]" : "hover:bg-[#303134]"}` // Aplica bg quando aberto ou no hover (tema escuro)
                 : `text-[#000000de] ${appsMenuAberto ? "bg-gray-200" : "hover:bg-gray-200"}` // Aplica bg quando aberto ou no hover (tema claro)
-
               }
             `}
           >
@@ -75,14 +76,23 @@ function Cabecalho() {
           </button>
 
           {/* Aqui será renderizada a lista de apps */}
-          {appsMenuAberto && (
+                  {appsMenuAberto && (
             <div className={`
-              absolute top-full mt-3 right-0 w-[280px] rounded-lg shadow-lg p-4 grid grid-cols-3 gap-y-4 gap-x-2 z-50
-              ${temaEscuro ? "bg-[#303134] text-white" : "bg-white text-gray-800 border border-gray-200"}
+              absolute top-full mt-2 right-[-20px] w-[340px] max-h-[540px] rounded-[32px] z-50 
+              flex flex-col overflow-hidden /* <--- Garante que a barra não passe das bordas */
+              ${temaEscuro 
+                ? "bg-[#303134] border-[#3c4043] shadow-[0_4px_16px_rgba(0,0,0,0.5)]"  
+                : "bg-white border border-[#dadce0] shadow-[0_4px_16px_rgba(0,0,0,0.2)]"
+              }
             `}>
-              {googleApps.map((app, index) => (
-                <AppMenuItem key={index} app={app} temaEscuro={temaEscuro} />
-              ))}
+              
+              {/* CONTAINER DA ROLAGEM INTERNA */}
+              <div className="w-full h-full p-4 grid grid-cols-3 gap-y-2 gap-x-2 overflow-y-auto pr-2">
+                {googleApps.map((app, index) => (
+                  <AppMenuItem key={index} app={app} temaEscuro={temaEscuro} />
+                ))}
+              </div>
+
             </div>
           )}
         </div>
