@@ -1,4 +1,3 @@
-
 import IconeLupa from '../icones/IconeLupa'
 import IconeTeclado from '../icones/IconeTeclado'
 import IconeMicrofone from '../icones/IconeMicrofone'
@@ -40,28 +39,21 @@ function BarraPesquisa() {
         <form onSubmit={handleSubmit} className='w-full flex flex-col items-center mt-[25px]'>
             <div
                 ref={searchbarRef}
-                //vamos juntar tema escuro e tema claro depois de conferir código
-                className={`
-        relative flex items-center w-full max-w-[688px] h-[50px] px-5 
-        
-        /* --- TEMA CLARO --- */
-        ${!temaEscuro ? `
-            bg-white border 
-            ${focused
-                            ? 'rounded-t-[24px] border-transparent shadow-[0_1px_6px_rgba(32,33,36,0.28)]'
-                            : 'rounded-[24px] border-[#dadce0] shadow-[0px_3px_10px_0px_rgba(31,31,31,0.08)] hover:shadow-[0_1px_6px_rgba(32,33,36,0.28)] hover:border-transparent'
-                        }
-        ` : ''}
+            className={`
+                    relative flex items-center w-full max-w-[688px] h-[50px] px-5 
+                    ${focused ? 'rounded-t-[24px]' : 'rounded-[24px]'}
 
-        /* --- TEMA ESCURO --- */
-        ${temaEscuro ? `
-            border-none
-            ${focused
-                            ? 'bg-[#303134] rounded-t-[24px] shadow-none'
-                            : 'bg-[#4d5156] rounded-[24px] hover:bg-[#5f6368] hover:shadow-[0_1px_6px_rgba(0,0,0,0.5)]'
-                        }
-        ` : ''}
-    `}
+                    ${temaEscuro
+                        ? // Tema Escuro
+                            focused
+                                ? 'bg-[#303134] border-none shadow-none'
+                                : 'bg-[#4d5156] border-none hover:bg-[#5f6368] hover:shadow-[0_1px_6px_rgba(0,0,0,0.5)]'
+                        : // Tema Claro
+                            focused
+                                ? 'bg-white border-transparent shadow-[0_1px_6px_rgba(32,33,36,0.28)]'
+                                : 'bg-white border border-[#dadce0] shadow-[0px_3px_10px_0px_rgba(31,31,31,0.08)] hover:shadow-[0_1px_6px_rgba(32,33,36,0.28)] hover:border-transparent'
+                    }
+                `}
             >
                 <button type="submit" className="cursor-pointer ">
                     <IconeLupa />

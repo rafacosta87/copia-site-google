@@ -8,13 +8,14 @@ import { ContextoTema } from './ContextoTema'
 
 
 function Conteudo() {
-const {temaEscuro} = useContext(ContextoTema)
+  const { temaEscuro } = useContext(ContextoTema)
 
   return (
     <>
-      <div className='flex flex-col items-center justify-center h-full w-full px-5.5 pb-[175px]'
-      style={{ backgroundColor: temaEscuro ? "#202124" : "#fff" }}
-      >
+      <div className={`
+      flex flex-col items-center justify-center h-full w-full px-5.5 pb-[175px] transition-colors duration-200
+      ${temaEscuro ? "bg-[#202124]" : "bg-white"}
+    `}>
 
         <IconeGoogle />
 
