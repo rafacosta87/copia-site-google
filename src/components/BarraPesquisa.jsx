@@ -5,10 +5,10 @@ import IconeFoto from '../icones/IconeFoto'
 import { useState, useRef, useEffect } from 'react'
 import useClickOutside from '../hooks/useClickOutside'
 import IconeX from '../icones/IconeX'
-import ItemHistorico from './ItemHistorico'
 import Botao from './Botao'
 import { useContext } from 'react'
 import { ContextoTema } from './ContextoTema'
+import HistoricoPesquisa from './HistoricoPesquisa' // Importar o novo componente
 
 function BarraPesquisa() {
     const { temaEscuro } = useContext(ContextoTema);
@@ -89,29 +89,11 @@ function BarraPesquisa() {
 
                 {/* Dropdown de Histórico */}
                 {focused && (
-                    <div className={`
-        absolute top-[49px]   w-full max-w-[688px] flex flex-col rounded-b-[24px] pb-4 z-30
-        ${temaEscuro
-                            ? 'bg-[#303134] shadow-none left-[0]'
-                            : 'bg-white shadow-[0_4px_6px_rgba(32,33,36,.28)] left-[-1px]'
-                        }
-    `}>
-                        <div className="px-4 mb-2">
-                            {/* Linha separadora idêntica à do Google */}
-                            <hr className={`border-t ${temaEscuro ? 'border-[#5f6368]' : 'border-[#e8eaed]'} `} />
-                        </div>
-                        {historicoPesquisa.slice(0, 10).map((historico, id) => (
-                            <ItemHistorico
-                                key={id}
-                                item={historico}
-                                event={() => setHistoricoPesquisa(prev => prev.filter((_, i) => i !== id))}
-                            />
-                        ))}
-                        <div className='flex justify-center gap-3 py-4 mt-1'>
-                            <Botao type="submit">Pesquisa Google</Botao>
-                            <Botao type="button">Estou com sorte</Botao>
-                        </div>
-                    </div>
+                    <HistoricoPesquisa
+                        historicoPesquisa={historicoPesquisa}
+                        setHistoricoPesquisa={setHistoricoPesquisa}
+                        temaEscuro={temaEscuro}
+                    />
                 )}
             </div>
 
